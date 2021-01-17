@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Índice de masa corporal (IMC)v3</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="peso_kg">Peso (Kg)</string>
+    <string name="altura_cm">Altura (cm)</string>
+    <string name="mensajeErrorEditText">Los campos de <b>Peso</b> y <b>Altura</b> no deben estar vacíos para realizar el cálculo</string>
+    <string name="mensajeErrorRadioButtons">Debe seleccionar el sexo <b>Hombre</b> o <b>Mujer</b></string>
+    <string name="PesoInferior">Peso inferior al normal</string>
+    <string name="PesoNormal">Normal</string>
+    <string name="Sobrepeso">Sobrepeso</string>
+    <string name="Obesidad">Obesidad</string>
+    <string name="nombreFichero">myIMC.txt</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="calcular">calcular</string>
+    <string name="_0_0">0.0</string>
+    <string name="imc">IMC</string>
+    <string name="_000_0">000.0</string>
+    <string name="altura">Altura:</string>
+    <string name="_00_0">00.0</string>
+    <string name="peso">Peso:</string>
+    <string name="Mujer">mujer</string>
+    <string name="tipo_imc">tipo imc</string>
+    <string name="_2020">2020</string>
+    <string name="_7">7</string>
+    <string name="diciembre">Diciembre</string>
+    <!-- Array de tipo String para guardar los meses del año-->
+    <string-array name="meses">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
+    <string name="errorFicheroVacio">No se puede leer el fichero porque está vacío o no existe</string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="mensajeAlerDialog">¿Desea guardar la información obtenida para el histórico?</string>
+    <string name="mensaje_cancelar">La información no ha quedado registrada</string>
+    <string name="mensaje_aceptar">La información se ha registrado en el histórico</string>
+</resources>

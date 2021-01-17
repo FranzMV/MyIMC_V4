@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <TextView
+        android:id="@+id/txtViewPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/peso_kg"
+        app:layout_constraintEnd_toStartOf="@+id/editTextPeso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewAltura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="47dp"
+        android:text="@string/altura_cm"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroupGenero"
+        app:layout_constraintEnd_toStartOf="@+id/editTextAltura"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewPeso" />
+
+    <EditText
+        android:id="@+id/editTextPeso"
+        android:layout_width="308dp"
+        android:layout_height="41dp"
+
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=" "
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/editTextAltura"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewPeso"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="Q" />
+
+    <EditText
+        android:id="@+id/editTextAltura"
+        android:layout_width="308dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="31dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=" "
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtViewAltura"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPeso"
+        tools:targetApi="Q" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupGenero"
+        android:layout_width="407dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalcular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAltura">
+
+        <RadioButton
+            android:id="@+id/radioBtnHombre"
+            android:layout_width="102dp"
+            android:layout_height="40dp"
+            android:text="@string/hombre"
+            tools:text="Hombre" />
+
+        <RadioButton
+            android:id="@+id/radioBtnMujer"
+            android:layout_width="267dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/mujer"
+            tools:text="Mujer" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCalcular"
+        android:layout_width="411dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="1dp"
+        android:text="@string/calcular"
+        app:layout_constraintBottom_toTopOf="@+id/txtViewIMC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupGenero"
+        tools:text="Calcular" />
+
+    <TextView
+        android:id="@+id/txtViewIMC"
+        android:layout_width="410dp"
+        android:layout_height="271dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCalcular" />
+
+    <TextView
+        android:id="@+id/txtViewResultado"
+        android:layout_width="412dp"
+        android:layout_height="57dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewIMC" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
