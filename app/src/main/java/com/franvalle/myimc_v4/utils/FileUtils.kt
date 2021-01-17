@@ -45,7 +45,8 @@ class FileUtils (private val context: Context, private val view: View){
     fun readFile(): MutableList<Imc> {
 
         val delimitador = ";"
-        val lista: MutableList<Imc> = arrayListOf()
+        val lista: MutableList<Imc> = ArrayList()
+        val myImc = Imc()
 
         //Comprobamos si existe el fichero, si existe, lo leemos, si no, mostramos un aviso
         if (context.fileList().contains(context.getString(R.string.nombreFichero))) {
@@ -58,16 +59,14 @@ class FileUtils (private val context: Context, private val view: View){
 
                 //Mientras el fichero no esté vacío lo leemos y añadimos los datos a una lista de tipo Imc
                 while (!linea.isNullOrEmpty()) {
-                    lista.add(
-                            Imc(
-                                linea.split(delimitador)[0].toDouble(),//Peso
-                                linea.split(delimitador)[1].toDouble(),//Altrua
-                                linea.split(delimitador)[2],//Fecha
-                                linea.split(delimitador)[3],//Sexo
-                                linea.split(delimitador)[4].toDouble(),//Cálculo IMC
-                                linea.split(delimitador)[5]//Resultado IMC
-                            )
-                    )
+                    myImc.peso = linea.split(delimitador)[0].toDouble()
+                    myImc.altura = linea.split(delimitador)[1].toDouble()
+                    myImc.fecha =linea.split(delimitador)[2]
+                    myImc.sexo =linea.split(delimitador)[3]
+                    myImc.calculoIMC = linea.split(delimitador)[4].toDouble()
+                    myImc.resultadoIMC =linea.split(delimitador)[5]
+
+                    lista.add(myImc)
                     linea = br.readLine()
                 }
                 br.close()

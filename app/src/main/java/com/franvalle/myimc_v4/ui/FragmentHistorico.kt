@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.franvalle.myimc_v4.R
 import com.franvalle.myimc_v4.adapters.HistoricoAdapter
 import com.franvalle.myimc_v4.databinding.FragmentHistoricoBinding
 import com.franvalle.myimc_v4.model.Imc
@@ -21,7 +22,8 @@ class FragmentHistorico() : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
         // Inflate the layout for this fragment
@@ -37,12 +39,13 @@ class FragmentHistorico() : Fragment() {
 
     //Función para actualizar el contenido del Recycler cuando se añada un dato
     private fun updateRecycler(){
-        // Comprobar si existe el fichero
-        //if(context!!.FileUtils(context,binding.layoutHistorico).readFile())
-        binding.recyclerViewHistorico.setHasFixedSize(true)
-        binding.recyclerViewHistorico.adapter = adaptador
-        binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(activity)
-        adaptador.HistoricoAdapter(crearListaHistorico(), binding.layoutHistorico.context)
+
+        if(context!!.fileList().contains(getString(R.string.nombreFichero))) {
+            binding.recyclerViewHistorico.setHasFixedSize(true)
+            binding.recyclerViewHistorico.adapter = adaptador
+            binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(activity)
+            adaptador.HistoricoAdapter(crearListaHistorico(), binding.layoutHistorico.context)
+        }
     }
 
     /**

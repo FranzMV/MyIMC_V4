@@ -6,15 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import com.franvalle.myimc_v4.R
 import com.franvalle.myimc_v4.databinding.FragmentImcBinding
 import com.franvalle.myimc_v4.model.Imc
 import com.franvalle.myimc_v4.utils.FileUtils
 import com.franvalle.myimc_v4.utils.MessageUtils
+import com.franvalle.myimc_v4.utils.MyFunctions
 import java.util.*
-import kotlin.math.pow
 
 
 /**
@@ -25,19 +24,9 @@ import kotlin.math.pow
 class FragmentImc : Fragment() {
 
     //Objeto de tipo imc
-    private lateinit var imc: Imc
+    private lateinit var myImc: Imc
     //Variable para el Binding
     private lateinit var binding: FragmentImcBinding
-
-    //Variables necesarias para calcular el IMC
-    private var peso : Double = 0.0
-    private var altura : Double = 0.0
-    private var resultado : Double = 0.0
-
-    //Para obtener la fecha en forma de String
-    private lateinit var fecha : String
-    //Para obtener el resultado del IMC (no numérico) en forma de String
-    private lateinit var resultadoIMC : String
 
 
     /**
@@ -46,7 +35,7 @@ class FragmentImc : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentImcBinding.inflate(inflater,container, false)
         return binding.root
@@ -58,6 +47,9 @@ class FragmentImc : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Instancia de un objeto de tipo IMC
+        myImc = Imc()
+
         /**
          * Evento de botón para calcular el IMC
          */
@@ -67,113 +59,48 @@ class FragmentImc : Fragment() {
                 Si ninguno de los dos EditText están vacíos, calculamos el IMC
                 si no, mostramos el Toast con el aviso
              */
-            if (binding.editTextPeso.text.toString().isNotEmpty() &&
-                    binding.editTextAltura.text.toString().isNotEmpty()) {
+            if (binding.editTextPeso.text.toString().isNotEmpty() && binding.editTextAltura.text.toString().isNotEmpty()) {
 
-                //Calculamos el IMC con los datos obtenidos en los EditTex
-                peso = binding.editTextPeso.text.toString().toDouble()
-                altura = binding.editTextAltura.text.toString().toDouble()
-                resultado = peso / (altura.pow(2)) * 10000
+                if((binding.txtViewPeso.text.toString().toDouble() > 0.00) && binding.txtViewAltura.text.toString().toDouble() >0.00){
 
-                /**
-                    *Controlamos qué tipo de RadioButton (Hombre o Mujer) ha seleccionado el usuario
-                    *y calculamos el IMC corresponciente llamando a la función calcularResultadoIMC.
-                    *Si no se selecciona ninguno, se muestra el SnackBar para avisar.
-                    *Si el input de datos del usuario es correcto, mostramos un AletDialog para confirmar
-                    *si quiere guardar la información o no en el histórico
-                 */
-                when {
-                    //Si se ha elegido Hombre
-                    binding.radioBtnHombre.isChecked -> {
+                    //Calculamos el IMC con los datos obtenidos en los EditTex
+                    myImc.fecha = MyFunctions().obtenerFecha()
+                    myImc.peso = binding.editTextPeso.text.toString().toDouble()
+                    myImc.altura = binding.editTextAltura.text.toString().toDouble()
+                    myImc.calculoIMC = MyFunctions().calcularIMC(myImc.peso!!, myImc.altura!!)
 
-                        binding.txtViewIMC.text = String.format("%.2f", resultado)
-                        resultadoIMC = calcularResultadoIMC(resultado, binding.radioBtnHombre)
-                        fecha = obtenerFecha()
-                        imc = Imc(peso, altura, fecha, binding.radioBtnHombre.text.toString(), resultado, resultadoIMC)
-                        createAlertDialog(getString(R.string.mensajeAlerDialog), imc, binding.mainLayout.context )
+                    //Controlamos qué tipo de RadioButton (Hombre o Mujer) ha seleccionado el usuario
+                    when {
+                        //Si se ha elegido Hombre
+                        binding.radioBtnHombre.isChecked -> {
+                            myImc.sexo = binding.radioBtnHombre.text.toString()
+                            myImc.resultadoIMC = MyFunctions().obtenerResultadoIMC(
+                                    it.context,
+                                    myImc.calculoIMC!!,
+                                    binding.radioBtnHombre.text.toString()
+                            )
+                        }
+                        //Si se ha elegido Mujer
+                        binding.radioBtnMujer.isChecked -> {
+                            myImc.sexo = binding.radioBtnMujer.text.toString()
+                            myImc.resultadoIMC = MyFunctions().obtenerResultadoIMC(
+                                    it.context,
+                                    myImc.calculoIMC!!,
+                                    binding.radioBtnMujer.text.toString()
+                            )
+
+                        }else -> MessageUtils().mostrarSnackBar(getString(R.string.mensajeErrorRadioButtons), view)
                     }
-                    //Si se ha elegido Mujer
-                    binding.radioBtnMujer.isChecked -> {
 
-                        binding.txtViewIMC.text = String.format("%.2f", resultado)
-                        resultadoIMC = calcularResultadoIMC(resultado, binding.radioBtnMujer)
-                        fecha = obtenerFecha()
-                        imc = Imc(peso, altura, fecha, binding.radioBtnMujer.text.toString(), resultado, resultadoIMC)
-                        createAlertDialog(getString(R.string.mensajeAlerDialog), imc, binding.mainLayout.context)
-                    }
-                    else -> MessageUtils().mostrarSnackBar(getString(R.string.mensajeErrorRadioButtons), binding.mainLayout)
-                }
+                    binding.txtViewIMC.text = String.format("%.2f", myImc.calculoIMC)
+                    binding.txtViewResultado.text = myImc.resultadoIMC
 
-            } else MessageUtils().mostrarSnackBar(getString(R.string.mensajeErrorEditText), binding.mainLayout)
+                }else MessageUtils().mostrarSnackBar("Los campos de peso y altura deben ser mayores que cero", view)
+
+            } else MessageUtils().mostrarSnackBar(getString(R.string.mensajeErrorEditText), view)
         }
     }
 
-
-    /**
-     * Función para calcular el IMC dependiendo del resultado y el género
-     * seleccionado por el usuario en el RadioButton
-     */
-    private fun calcularResultadoIMC(resultado : Double, sexo: RadioButton) : String {
-
-        var resultadoIMC = ""
-        //ICM para Hombre
-        when (sexo.text) {
-            binding.radioBtnHombre.text -> {
-                when (resultado) {
-                    in 0.0..18.5 -> {
-                        binding.txtViewResultado.text = getString(R.string.PesoInferior)
-                        resultadoIMC = getString(R.string.PesoInferior)
-                    }
-                    in 18.5..24.9 -> {
-                        binding.txtViewResultado.text = getString(R.string.PesoNormal)
-                        resultadoIMC = getString(R.string.PesoNormal)
-                    }
-                    in 25.0..29.9 -> {
-                        binding.txtViewResultado.text = getString(R.string.Sobrepeso)
-                        resultadoIMC = getString(R.string.Sobrepeso)
-                    }
-                    else -> {
-                        binding.txtViewResultado.text = getString(R.string.Obesidad)
-                        resultadoIMC = getString(R.string.Obesidad)
-                    }
-                }
-            }
-            //IMC Mujer
-            binding.radioBtnMujer.text -> {
-                when (resultado) {
-                    in 0.0..18.5 -> {
-                        binding.txtViewResultado.text = getString(R.string.PesoInferior)
-                        resultadoIMC = getString(R.string.PesoInferior)
-                    }
-                    in 18.5..23.9 -> {
-                        binding.txtViewResultado.text = getString(R.string.PesoNormal)
-                        resultadoIMC = getString(R.string.PesoNormal)
-                    }
-                    in 24.0..28.9 -> {
-                        binding.txtViewResultado.text = getString(R.string.Sobrepeso)
-                        resultadoIMC = getString(R.string.Sobrepeso)
-                    }
-                    else ->{
-                        binding.txtViewResultado.text = getString(R.string.Obesidad)
-                        resultadoIMC = getString(R.string.Obesidad)
-                    }
-                }
-            }
-        }
-        return resultadoIMC
-    }
-
-    /**
-     * Función que devuelve un String con la fecha en la que se realiza el cálculo del IMC
-     */
-    private fun obtenerFecha() : String{
-
-        val hoy = Calendar.getInstance()
-
-        return "${hoy.get(Calendar.DAY_OF_MONTH)}"+
-                "-${hoy.get(Calendar.MONTH)}"+
-                "-${hoy.get(Calendar.YEAR)}"
-    }
 
     /**
      * Función encargada de crear un alertDialog y preguntar al
@@ -186,7 +113,6 @@ class FragmentImc : Fragment() {
         val builder = AlertDialog.Builder(context)
         val fileUtils = FileUtils(context, binding.mainLayout)
 
-
         //Se crea el alert dialog
         builder.apply {
             //Se assigna el cuerpo del mensaje
@@ -198,7 +124,6 @@ class FragmentImc : Fragment() {
                 //Avisamos
                 MessageUtils().mostrarSnackBar(getString(R.string.mensaje_aceptar), binding.mainLayout)
             }
-
             setNegativeButton(R.string.cancelar){_,_ ->
                 //No guardamos datos en el fichero pero avisamos
                 MessageUtils().mostrarSnackBar(getString(R.string.mensaje_cancelar), binding.mainLayout)

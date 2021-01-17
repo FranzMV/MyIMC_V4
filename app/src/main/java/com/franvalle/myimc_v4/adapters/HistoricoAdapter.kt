@@ -86,13 +86,13 @@ class HistoricoAdapter : RecyclerView1.Adapter<HistoricoAdapter.ViewHolder>(){
              *  Asignamos los campos de la fecha con respecto a un array de strings (creado en strings.xml)
              *  que contiene los nombres de los meses del año.
              */
-            mes.text = context.resources.getStringArray(R.array.meses)[imc.fecha.split(delimitador)[1].toInt()]
-            dia.text = imc.fecha.split(delimitador)[0]
-            anyo.text = imc.fecha.split(delimitador)[2]
+            mes.text = context.resources.getStringArray(R.array.meses)[imc.fecha!!.split(delimitador)[1].toInt()]
+            dia.text = imc.fecha!!.split(delimitador)[0]
+            anyo.text = imc.fecha!!.split(delimitador)[2]
 
             //El resto de campos de un objeto de tipo IMC
             peso.text = imc.peso.toString()
-            altura.text = imc.altrura.toString()
+            altura.text = imc.altura.toString()
             sexo.text = imc.sexo
             calculoIMC.text = String.format("%.2f", imc.calculoIMC)
             resultadoIMC.text = imc.resultadoIMC
