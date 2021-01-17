@@ -37,7 +37,7 @@ class FragmentHistorico() : Fragment() {
 
     //Función para actualizar el contenido del Recycler cuando se añada un dato
     private fun updateRecycler(){
-        //Todo, comprobar si existe el fichero
+        // Comprobar si existe el fichero
         //if(context!!.FileUtils(context,binding.layoutHistorico).readFile())
         binding.recyclerViewHistorico.setHasFixedSize(true)
         binding.recyclerViewHistorico.adapter = adaptador
