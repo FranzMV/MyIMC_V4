@@ -2,7 +2,6 @@ package com.franvalle.myimc_v4.utils
 
 import android.app.Activity
 import android.content.Context
-import android.view.View
 import com.franvalle.myimc_v4.R
 import com.franvalle.myimc_v4.model.Imc
 import java.io.BufferedReader
@@ -14,12 +13,12 @@ import java.io.OutputStreamWriter
 /**
  * Clase encargada de manejar la lectura y escritura de ficheros
  */
-class FileUtils (private val context: Context, private val view: View){
+class FileUtils {
 
     /**
      * Función para escribir los datos obtenidos del IMC en un fichero de texto(MyImc.txt)
      */
-    fun writeFile(imc: Imc) {
+    fun writeFile(context: Context, imc: Imc) {
 
         try {
 
@@ -35,14 +34,14 @@ class FileUtils (private val context: Context, private val view: View){
             salida.flush()
             salida.close()
 
-        } catch (e: IOException) { MessageUtils().mostrarSnackBar(e.toString(), view) }
+        } catch (e: IOException) { MessageUtils().mostrarToast(e.toString(), context) }
     }
 
 
     /**
      * Función que lee el fichero myIMC.txt y devuelve una lista con los datos cargados
      */
-    fun readFile(): MutableList<Imc> {
+    fun readFile(context: Context): MutableList<Imc> {
 
         val delimitador = ";"
         val lista: MutableList<Imc> = ArrayList()
@@ -72,9 +71,9 @@ class FileUtils (private val context: Context, private val view: View){
                 br.close()
                 entrada.close()
 
-            } catch (ex: IOException) { MessageUtils().mostrarSnackBar(ex.toString(), view) }
+            } catch (ex: IOException) { MessageUtils().mostrarToast(ex.toString(), context) }
 
-        } else  MessageUtils().mostrarSnackBar(context.getString(R.string.errorFicheroVacio),view)
+        } else  MessageUtils().mostrarToast(context.getString(R.string.errorFicheroVacio),context)
 
         return lista
     }

@@ -44,7 +44,7 @@ class FragmentHistorico() : Fragment() {
             binding.recyclerViewHistorico.setHasFixedSize(true)
             binding.recyclerViewHistorico.adapter = adaptador
             binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(activity)
-            adaptador.HistoricoAdapter(crearListaHistorico(), binding.layoutHistorico.context)
+            adaptador.HistoricoAdapter(crearListaHistorico(), context!!)
         }
     }
 
@@ -53,6 +53,6 @@ class FragmentHistorico() : Fragment() {
      */
     private fun crearListaHistorico(): MutableList<Imc> {
 
-        return FileUtils(binding.recyclerViewHistorico.context, binding.layoutHistorico).readFile()
+        return FileUtils().readFile(context!!)
     }
 }

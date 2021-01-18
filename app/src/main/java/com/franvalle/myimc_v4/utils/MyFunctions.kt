@@ -39,36 +39,19 @@ class MyFunctions {
         var result = ""
 
         if (sexo.equals("Hombre")) {
-            when (calculoIMC) {
-                in 0.0..18.5 -> {
-                    result = context.getString(R.string.PesoInferior)
-                }
-                in 18.5..24.9 -> {
-                    result = context.getString(R.string.PesoNormal)
-                }
-                in 25.0..29.9 -> {
-                    result = context.getString(R.string.Sobrepeso)
-                }
-                else -> {
-                    result = context.getString(R.string.Obesidad)
-                }
+            result = when (calculoIMC) {
+                in 0.0..18.5 -> { context.getString(R.string.PesoInferior) }
+                in 18.5..24.9 -> { context.getString(R.string.PesoNormal) }
+                in 25.0..29.9 -> { context.getString(R.string.Sobrepeso) }
+                else -> { context.getString(R.string.Obesidad) }
             }
         } else {
-            when(calculoIMC){
-                in 0.0..18.5 -> {
-                    result = context.getString(R.string.PesoInferior)
-                }
-                in 18.5..23.9 -> {
-                    result = context.getString(R.string.PesoNormal)
-                }
-                in 24.0..28.9 -> {
-                    result = context.getString(R.string.Sobrepeso)
-                }
-                else ->{
-                    result = context.getString(R.string.Obesidad)
-                }
+            result = when(calculoIMC){
+                in 0.0..18.5 -> { context.getString(R.string.PesoInferior) }
+                in 18.5..23.9 -> { context.getString(R.string.PesoNormal) }
+                in 24.0..28.9 -> { context.getString(R.string.Sobrepeso) }
+                else ->{ context.getString(R.string.Obesidad) }
             }
-
         }
         return  result
     }

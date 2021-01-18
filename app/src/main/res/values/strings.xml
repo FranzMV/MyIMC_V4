@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Índice de masa corporal (IMC)v3</string>
+    <string name="app_name">Índice de masa corporal (IMC)v4</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="peso_kg">Peso (Kg)</string>
     <string name="altura_cm">Altura (cm)</string>
