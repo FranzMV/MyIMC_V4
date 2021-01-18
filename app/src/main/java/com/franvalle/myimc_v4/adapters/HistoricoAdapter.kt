@@ -29,12 +29,17 @@ class HistoricoAdapter : RecyclerView1.Adapter<HistoricoAdapter.ViewHolder>(){
     /**
      * Función que se encarga de devolver el viewHolder configurado
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(
             layoutInflater.inflate(
-                R.layout.item_historico, parent, false
+                R.layout.item_historico,
+                parent,
+                false
             )
         )
     }
@@ -53,9 +58,10 @@ class HistoricoAdapter : RecyclerView1.Adapter<HistoricoAdapter.ViewHolder>(){
      * Función que devuelve el número de items en la Lista que guarda el Histórico
      */
     override fun getItemCount(): Int {
-        return listaHistorico.size
+        return if(listaHistorico.size > 0){
+            listaHistorico.size
+        }else 0
     }
-
 
 
     /**
