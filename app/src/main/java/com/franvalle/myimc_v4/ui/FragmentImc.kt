@@ -54,10 +54,7 @@ class FragmentImc : Fragment() {
         // Evento de botón para calcular el IMC
         binding.btnCalcular.setOnClickListener {
 
-            /**
-                Si ninguno de los dos EditText están vacíos, calculamos el IMC
-                si no, mostramos el Toast con el aviso
-             */
+            //Si ninguno de los dos EditText están vacíos, calculamos el IMC
             if (binding.editTextPeso.text.toString().isNotEmpty() &&
                     binding.editTextAltura.text.toString().isNotEmpty()) {
 
@@ -69,6 +66,7 @@ class FragmentImc : Fragment() {
 
                 //Controlamos qué tipo de RadioButton (Hombre o Mujer) ha seleccionado el usuario
                 when {
+                    //Si se ha seleccionado Hombre
                     binding.radioBtnHombre.isChecked -> {
 
                         myImc.sexo = binding.radioBtnHombre.text.toString()
@@ -77,12 +75,16 @@ class FragmentImc : Fragment() {
                                 myImc.calculoIMC!!,
                                 binding.radioBtnHombre.text.toString()
                         )
+                        //Obtenemos el resto de datos del IMC
                         binding.txtViewIMC.text = String.format("%.2f", myImc.calculoIMC)
                         binding.txtViewResultado.text = myImc.resultadoIMC
+                        //Pasamos el objeto IMC creado a myDialogFragment para que éste pregunte
+                        //al usuario si desea guardar los datos en la BD
                         myDialogFragment = MyDialogFragment(myImc)
                         myDialogFragment.show(fragmentManager!!, "SaveFile")
 
                     }
+                    //Si se ha seleccionado Mujer
                     binding.radioBtnMujer.isChecked -> {
 
                         myImc.sexo = binding.radioBtnMujer.text.toString()
@@ -91,8 +93,11 @@ class FragmentImc : Fragment() {
                                 myImc.calculoIMC!!,
                                 binding.radioBtnMujer.text.toString()
                         )
+                        //Obtenemos el resto de datos del IMC
                         binding.txtViewIMC.text = String.format("%.2f", myImc.calculoIMC)
                         binding.txtViewResultado.text = myImc.resultadoIMC
+                        //Pasamos el objeto IMC creado a myDialogFragment para que éste pregunte
+                        //al usuario si desea guardar los datos en la BD
                         myDialogFragment = MyDialogFragment(myImc)
                         myDialogFragment.show(fragmentManager!!, "SaveFile")
 

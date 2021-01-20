@@ -2,7 +2,6 @@ package com.franvalle.myimc_v4.utils
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.franvalle.myimc_v4.R
@@ -25,12 +24,13 @@ class MyDialogFragment(imc: Imc) : DialogFragment() {
 
             builder.setMessage(getString(R.string.mensajeAlerDialog))
                     .setPositiveButton(android.R.string.ok){_, _ ->
-                        //Guardamos los datos en la BD
+                        //Guardamos los datos en la BD y avisamos
                         imcDB.addIMC(myImc)
                         MessageUtils().mostrarSnackBar(getString(R.string.mensaje_aceptar),
                             it.findViewById(android.R.id.content))
                     }
                     .setNegativeButton(android.R.string.cancel){_, _ ->
+                        //No guardamos los datos y avisamos
                         MessageUtils().mostrarSnackBar(getString(R.string.mensaje_cancelar),
                                 it.findViewById(android.R.id.content))
                     }

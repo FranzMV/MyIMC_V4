@@ -24,8 +24,8 @@
 
         <LinearLayout
             android:id="@+id/containerFecha"
-            android:layout_width="121dp"
-            android:layout_height="149dp"
+            android:layout_width="96dp"
+            android:layout_height="147dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/containerCentral"
@@ -34,8 +34,8 @@
 
             <TextView
                 android:id="@+id/txtVmostrarMes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="99dp"
+                android:layout_height="34dp"
                 android:gravity="center"
                 android:text="@string/diciembre"
                 android:textSize="18sp"
@@ -43,8 +43,8 @@
 
             <TextView
                 android:id="@+id/txtVmostrarDia"
-                android:layout_width="match_parent"
-                android:layout_height="94dp"
+                android:layout_width="99dp"
+                android:layout_height="75dp"
                 android:gravity="center"
                 android:text="@string/_7"
                 android:textSize="30sp"
@@ -63,8 +63,9 @@
 
         <LinearLayout
             android:id="@+id/containerCentral"
-            android:layout_width="175dp"
-            android:layout_height="146dp"
+            android:layout_width="200dp"
+            android:layout_height="147dp"
+            android:layout_marginEnd="2dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/containerIMC"
@@ -74,7 +75,8 @@
             <TextView
                 android:id="@+id/txtVresultadoIMC"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
+                android:paddingTop="5dp"
                 android:text="@string/tipo_imc"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -87,7 +89,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="56dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -101,7 +103,7 @@
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:text="@string/_00_0"
-                    android:textAlignment="center" />
+                    android:textAlignment="viewStart" />
 
                 <TextView
                     android:id="@+id/labelAltura"
@@ -115,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/_000_0"
-                    android:textAlignment="center" />
+                    android:textAlignment="viewStart" />
             </LinearLayout>
 
         </LinearLayout>
@@ -123,8 +125,7 @@
         <LinearLayout
             android:id="@+id/containerIMC"
             android:layout_width="101dp"
-            android:layout_height="148dp"
-            android:layout_marginBottom="1dp"
+            android:layout_height="147dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +135,7 @@
             <TextView
                 android:id="@+id/txtEtiquetaIMC"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="34dp"
                 android:gravity="center"
                 android:text="@string/imc"
                 android:textSize="18sp"
@@ -143,7 +144,7 @@
             <TextView
                 android:id="@+id/txtViMC"
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
+                android:layout_height="74dp"
                 android:gravity="center"
                 android:text="@string/_0_0"
                 android:textSize="30sp"
