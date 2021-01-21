@@ -28,7 +28,6 @@ class MyDbOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?):
         const val COLUMNA_PESO = "peso"
         const val COLUMNA_ALTURA = "altura"
         const val COLUMNA_ESTADO = "estado"
-
     }
 
 
@@ -52,7 +51,6 @@ class MyDbOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?):
             db!!.execSQL(createTableIMC)
 
         }catch (e:SQLiteException){ Log.e("$TAG (onCreate)", e.message.toString())}
-
     }
 
     /**
