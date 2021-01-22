@@ -2,6 +2,7 @@ package com.franvalle.myimc_v4.utils
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
@@ -116,5 +117,31 @@ class MyDbOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?):
 
         db.close()
         return result
+    }
+
+    /**
+     * Función para cargar los datos del cursor en una Lista de tipo Imc
+     */
+    fun cargarDatosCursor(cursor: Cursor): MutableList<Imc>{
+
+        val datos: MutableList<Imc> = ArrayList()
+        if(cursor.moveToFirst()) {
+            do {
+                val imc = Imc()
+                imc._id = cursor.getString(cursor.getColumnIndex(COLUMNA_ID))
+                imc.fecha = cursor.getString(cursor.getColumnIndex(COLUMNA_FECHA))
+                imc.peso = cursor.getDouble(cursor.getColumnIndex(COLUMNA_PESO))
+                imc.sexo = cursor.getString(cursor.getColumnIndex(COLUMNA_SEXO))
+                imc.altura = cursor.getDouble(cursor.getColumnIndex(COLUMNA_ALTURA))
+                imc.calculoIMC = cursor.getDouble(cursor.getColumnIndex(COLUMNA_IMC))
+                imc.resultadoIMC = cursor.getString(cursor.getColumnIndex(COLUMNA_ESTADO))
+                datos.add(imc)
+            } while (cursor.moveToNext())
+
+            cursor.close()
+
+        }else Log.d("Sin datos","No hay datos en el cursor")
+
+        return datos
     }
 }

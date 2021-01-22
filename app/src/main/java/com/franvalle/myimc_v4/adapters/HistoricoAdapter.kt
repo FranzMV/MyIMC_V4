@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.franvalle.myimc_v4.R
 import com.franvalle.myimc_v4.databinding.ItemHistoricoBinding
@@ -107,6 +108,7 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
              */
             itemView.setOnLongClickListener{
                 val position = adapterPosition
+                //Toast.makeText(context,"Posición lista: ${position}", Toast.LENGTH_LONG).show()
                 confirmacionEmliminarIMC(listaHistorico, context, position, binding.textViewID)
                 return@setOnLongClickListener true
             }
@@ -118,7 +120,12 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
      * usuario si desea ELIMINAR el elemento IMC seleccionado mediante
      * pulsación larga
      */
-    private fun confirmacionEmliminarIMC(listaHistorico: MutableList<Imc>, context: Context, position: Int, txtID: TextView) {
+    private fun confirmacionEmliminarIMC(
+            listaHistorico: MutableList<Imc>,
+            context: Context,
+            position: Int,
+            txtID: TextView
+    ) {
 
         val builder = AlertDialog.Builder(context)
         val imc = listaHistorico.get(position)//Para la posición en la lista del Item seleccionado
@@ -128,13 +135,14 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
         builder.apply {
             setTitle("Eliminar IMC")
             setMessage("¿Desea eliminar el IMC ${String.format("%.2f",imc.calculoIMC)} del ${imc.fecha}?")
-            //Confirmar eliminación de un registr IMC
-            setPositiveButton(R.string.aceptar){dialog, _ ->
+            
+            //Confirmar eliminación de un registro IMC
+            setPositiveButton(R.string.aceptar){_, _ ->
                 listaHistorico.removeAt(position)//Eliminamos el item de la lista
                 myImcDbHelper.deleteIMC(identificador)//Lo eliminamos de la BD
                 notifyDataSetChanged()//Actualizamos el recyclerView
             }
-            setNegativeButton(R.string.cancelar){_,_ -> }
+            setNegativeButton(R.string.cancelar){ _,_ -> }
         }
         builder.show()
     }

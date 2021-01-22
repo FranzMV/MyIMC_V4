@@ -80,35 +80,9 @@ class FragmentHistorico() : Fragment() {
                 null
         )
 
-        adaptador.HistoricoAdapter(cargarDatosCursor(cursor), context!!)
+        adaptador.HistoricoAdapter(myImcDbHelper.cargarDatosCursor(cursor), context!!)
         binding.recyclerViewHistorico.setHasFixedSize(true)
         binding.recyclerViewHistorico.layoutManager = LinearLayoutManager(context!!)
         binding.recyclerViewHistorico.adapter = adaptador
-    }
-
-    /**
-     * Función para cargar los datos del cursor en una Lista de tipo Imc
-     */
-    private fun cargarDatosCursor(cursor: Cursor): MutableList<Imc>{
-
-        val datos: MutableList<Imc> = ArrayList()
-        if(cursor.moveToFirst()) {
-            do {
-                val imc = Imc()
-                imc._id = cursor.getString(cursor.getColumnIndex(COLUMNA_ID))
-                imc.fecha = cursor.getString(cursor.getColumnIndex(COLUMNA_FECHA))
-                imc.peso = cursor.getDouble(cursor.getColumnIndex(COLUMNA_PESO))
-                imc.sexo = cursor.getString(cursor.getColumnIndex(COLUMNA_SEXO))
-                imc.altura = cursor.getDouble(cursor.getColumnIndex(COLUMNA_ALTURA))
-                imc.calculoIMC = cursor.getDouble(cursor.getColumnIndex(COLUMNA_IMC))
-                imc.resultadoIMC = cursor.getString(cursor.getColumnIndex(COLUMNA_ESTADO))
-                datos.add(imc)
-            } while (cursor.moveToNext())
-
-            cursor.close()
-
-        }else Log.d("Sin datos","No hay datos en el cursor")
-
-        return datos
     }
 }
