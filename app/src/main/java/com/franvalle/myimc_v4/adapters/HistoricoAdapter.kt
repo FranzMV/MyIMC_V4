@@ -103,13 +103,12 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
             /**
              * Evento de pulsación larga para eliminar un elemento IMC del recyclerView.
              * Captamos la posición del elemento seleccionado para eliminarlo primero de la
-             * lista y después llamamos a la función eliminarIMC para confirmar la eliminación
+             * lista y después llamamos a la función confirmacionEliminarIMC para confirmar la eliminación
              * y eliminarlo también de la BD
              */
             itemView.setOnLongClickListener{
                 val position = adapterPosition
-                //Toast.makeText(context,"Posición lista: ${position}", Toast.LENGTH_LONG).show()
-                confirmacionEmliminarIMC(listaHistorico, context, position, binding.textViewID)
+                confirmacionEliminarIMC(listaHistorico, context, position, binding.textViewID)
                 return@setOnLongClickListener true
             }
         }
@@ -120,7 +119,7 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
      * usuario si desea ELIMINAR el elemento IMC seleccionado mediante
      * pulsación larga
      */
-    private fun confirmacionEmliminarIMC(
+    private fun confirmacionEliminarIMC(
             listaHistorico: MutableList<Imc>,
             context: Context,
             position: Int,
@@ -135,7 +134,7 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
         builder.apply {
             setTitle("Eliminar IMC")
             setMessage("¿Desea eliminar el IMC ${String.format("%.2f",imc.calculoIMC)} del ${imc.fecha}?")
-            
+
             //Confirmar eliminación de un registro IMC
             setPositiveButton(R.string.aceptar){_, _ ->
                 listaHistorico.removeAt(position)//Eliminamos el item de la lista
