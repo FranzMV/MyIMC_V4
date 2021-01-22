@@ -5,7 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
+import androidx.core.view.isVisible
 import com.franvalle.myimc_v4.R
 import com.franvalle.myimc_v4.databinding.ItemHistoricoBinding
 import com.franvalle.myimc_v4.model.Imc
@@ -38,6 +39,8 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
             viewType: Int
     ): ViewHolder {
 
+        //Instancia de myImcDBHelper
+        myImcDbHelper = MyDbOpenHelper(context, null)
         val layoutInflater = LayoutInflater.from(parent.context)
         return ViewHolder(
                 layoutInflater.inflate(
@@ -81,6 +84,8 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
         private val delimitador: String = "-"
 
         fun bind(imc:Imc){
+
+            binding.textViewID.text = imc._id
             binding.txtVmostrarMes.text = context.resources.getStringArray(R.array.meses)[imc.fecha!!.split(delimitador)[1].toInt()]
             binding.txtVmostrarDia.text = imc.fecha!!.split(delimitador)[0]
             binding.txtVmostrarAnyo.text = imc.fecha!!.split(delimitador)[2]
@@ -90,14 +95,19 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
             binding.txtViMC.text = String.format("%.2f", imc.calculoIMC)
             binding.txtVresultadoIMC.text = imc.resultadoIMC
 
+            //Ocultamos el textView del ID correspondiente al identificador del IMC en la BD
+            binding.textViewID.isVisible = false
+
+
             /**
-             *Evento de pulsación larga para eliminar un elemento IMC del recyclerView
+             * Evento de pulsación larga para eliminar un elemento IMC del recyclerView.
+             * Captamos la posición del elemento seleccionado para eliminarlo primero de la
+             * lista y después llamamos a la función eliminarIMC para confirmar la eliminación
+             * y eliminarlo también de la BD
              */
             itemView.setOnLongClickListener{
-
                 val position = adapterPosition
-                Toast.makeText(binding.itemHistoricoLayout.context, "Long click detected $position", Toast.LENGTH_SHORT).show()
-                mostrarAlertDialog(listaHistorico, context, position)
+                confirmacionEmliminarIMC(listaHistorico, context, position, binding.textViewID)
                 return@setOnLongClickListener true
             }
         }
@@ -108,23 +118,23 @@ class HistoricoAdapter : RecyclerView.Adapter<HistoricoAdapter.ViewHolder>(){
      * usuario si desea ELIMINAR el elemento IMC seleccionado mediante
      * pulsación larga
      */
-    private fun mostrarAlertDialog(listaHistorico: MutableList<Imc>, context: Context, position: Int) {
+    private fun confirmacionEmliminarIMC(listaHistorico: MutableList<Imc>, context: Context, position: Int, txtID: TextView) {
 
         val builder = AlertDialog.Builder(context)
-        val imc = listaHistorico.get(position)
+        val imc = listaHistorico.get(position)//Para la posición en la lista del Item seleccionado
+        val identificador = txtID.text.toString().toInt()//Para obtener el ID que identifica al Item en la BD
 
         //Se crea el alert dialog
         builder.apply {
             setTitle("Eliminar IMC")
-            //Se assigna el cuerpo del mensaje
             setMessage("¿Desea eliminar el IMC ${String.format("%.2f",imc.calculoIMC)} del ${imc.fecha}?")
-            setPositiveButton(R.string.aceptar){_, _ ->
-                listaHistorico.removeAt(position)
-                notifyDataSetChanged()
+            //Confirmar eliminación de un registr IMC
+            setPositiveButton(R.string.aceptar){dialog, _ ->
+                listaHistorico.removeAt(position)//Eliminamos el item de la lista
+                myImcDbHelper.deleteIMC(identificador)//Lo eliminamos de la BD
+                notifyDataSetChanged()//Actualizamos el recyclerView
             }
-            setNegativeButton(R.string.cancelar){_,_ ->
-
-            }
+            setNegativeButton(R.string.cancelar){_,_ -> }
         }
         builder.show()
     }

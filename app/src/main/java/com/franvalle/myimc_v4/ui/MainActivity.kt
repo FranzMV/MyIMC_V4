@@ -16,7 +16,6 @@ MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         //Se carga el toolBar
         setSupportActionBar(binding.toolbar)
         //Se carga el adapter

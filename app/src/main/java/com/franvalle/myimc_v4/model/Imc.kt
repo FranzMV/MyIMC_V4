@@ -1,6 +1,7 @@
 package com.franvalle.myimc_v4.model
 
 class Imc {
+    var _id: String? = null
     var peso: Double? = null
     set(value) {
         field = if(value!! > 0.00) value else 0.00

@@ -45,4 +45,5 @@
     <string name="mensajeAlerDialog">¿Desea guardar la información obtenida para el histórico?</string>
     <string name="mensaje_cancelar">La información no ha quedado registrada</string>
     <string name="mensaje_aceptar">La información se ha registrado en el histórico</string>
+    <string name="id">ID:</string>
 </resources>

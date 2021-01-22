@@ -16,6 +16,7 @@ import com.franvalle.myimc_v4.utils.MyDbOpenHelper
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_ALTURA
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_ESTADO
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_FECHA
+import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_ID
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_IMC
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_PESO
 import com.franvalle.myimc_v4.utils.MyDbOpenHelper.Companion.COLUMNA_SEXO
@@ -90,11 +91,11 @@ class FragmentHistorico() : Fragment() {
      */
     private fun cargarDatosCursor(cursor: Cursor): MutableList<Imc>{
 
-        // val imc = Imc()
         val datos: MutableList<Imc> = ArrayList()
         if(cursor.moveToFirst()) {
             do {
                 val imc = Imc()
+                imc._id = cursor.getString(cursor.getColumnIndex(COLUMNA_ID))
                 imc.fecha = cursor.getString(cursor.getColumnIndex(COLUMNA_FECHA))
                 imc.peso = cursor.getDouble(cursor.getColumnIndex(COLUMNA_PESO))
                 imc.sexo = cursor.getString(cursor.getColumnIndex(COLUMNA_SEXO))
@@ -103,6 +104,7 @@ class FragmentHistorico() : Fragment() {
                 imc.resultadoIMC = cursor.getString(cursor.getColumnIndex(COLUMNA_ESTADO))
                 datos.add(imc)
             } while (cursor.moveToNext())
+
             cursor.close()
 
         }else Log.d("Sin datos","No hay datos en el cursor")

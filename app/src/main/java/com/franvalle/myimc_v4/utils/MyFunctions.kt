@@ -36,7 +36,7 @@ class MyFunctions {
      */
     fun obtenerResultadoIMC(context: Context, calculoIMC: Double, sexo: String) : String {
 
-        var result = ""
+        var result: String
 
         if (sexo.equals("Hombre")) {
             result = when (calculoIMC) {

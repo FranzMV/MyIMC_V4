@@ -88,6 +88,7 @@ class MyDbOpenHelper(context: Context, factory: SQLiteDatabase.CursorFactory?):
 
         //Se crea un arrayMap<>() haciendo uso de ContentValue()
         val myIMCdata = ContentValues()
+        myIMCdata.put(COLUMNA_ID, imc._id)
         myIMCdata.put(COLUMNA_FECHA,imc.fecha)
         myIMCdata.put(COLUMNA_SEXO, imc.sexo)
         myIMCdata.put(COLUMNA_IMC, imc.calculoIMC)
